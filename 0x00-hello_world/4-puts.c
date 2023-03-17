@@ -9,7 +9,7 @@
 int main(void)
 {
 	/* String declaration: Array of chars  */
-	char string1[] = "Programming is like building a multilingual puzzle";
+	char string1[] = "\"Programming is like building a multilingual puzzle";
 
 	/* print to standard output */
 	puts(string1);

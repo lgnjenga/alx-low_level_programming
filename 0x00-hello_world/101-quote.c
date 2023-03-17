@@ -14,7 +14,7 @@ int main(void)
 	/* while loop */
 	while (s1[n1] != '\0')
 	{
-		num1++;
+		n1++;
 	}
 	write(2, s1, n1);
 

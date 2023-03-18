@@ -14,6 +14,12 @@ int main(void)
 	for (combination_num = 0; combination_num < 10; combination_num++)
 	{
 		putchar(combination_num + '0');
+		
+		/* if statement */
+		if (combination_num == 9)
+		{
+			break;
+		}
 		putchar(',');
 		putchar(' ');
 	}

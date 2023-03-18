@@ -20,7 +20,7 @@ int main(void)
 		}
 		else
 		{
-			putchar(i - 10 + 'a');
+			putchar(hex_num - 10 + 'a');
 		}
 	}
 

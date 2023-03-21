@@ -18,9 +18,9 @@ int main(void)
 		/* Inner For Loop  */
 		for (b = a + 1; b < 10; b++)
 		{
-			for (c = b + 1; c < 10; c ++)
+			for (c = b + 1; c < 10; c++)
 			{
-				if (a != b && a != c && b!= c)
+				if (a != b && a != c && b != c)
 				{
 					putchar('0' + a);
 					putchar('0' + b);

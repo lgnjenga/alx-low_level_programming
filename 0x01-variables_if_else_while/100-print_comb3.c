@@ -15,11 +15,11 @@ int main(void)
 	for (a = 0; a < 10; a++)
 	{
 		/* Inner For Loop  */
-		for (b == a + 1; b < 10; b++)
+		for (b = a + 1; b < 10; b++)
 		{
 			putchar('0' + a);
 			putchar('0' + b);
-			if (a != 8 || j != 9)
+			if (a != 8 || b != 9)
 			{
 				putchar(',');
 				putchar(' ');

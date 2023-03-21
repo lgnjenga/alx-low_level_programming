@@ -10,10 +10,6 @@ int main(void)
 	/* Declarations  */
 	int a;
 	int b;
-	int i;
-	int j;
-	int k;
-	int l;
 
 	/* For loop  */
 	for (a = 0; a < 100; a++)
@@ -21,15 +17,11 @@ int main(void)
 		/* Inner For Loop  */
 		for (b = a; b < 100; b++)
 		{
-			i = a / 10;
-			j = a % 10;
-			k = b / 10;
-			l = b % 10;
-			putchar('0' + i);
-			putchar('0' + j);
+			putchar(a / 10 + '0');
+			putchar(a % 10 + '0');
 			putchar(' ');
-			putchar('0' + k);
-			putchar('0' + l);
+			putchar(b / 10 + '0');
+			putchar(b % 10 + '0');
 			if (a != 99 || b != 99)
 			{
 				putchar(',');

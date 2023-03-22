@@ -1,11 +1,11 @@
 #include "main.h"
 /**
- * print_alphabet - prints alphabet a to z 10 times using nested for loops
+ * print_alphabet_x10 - prints alphabet a to z 10 times using nested for loops
  *
  * Return: Always 0 (Success)
  */
 
-void print_alphabet(void)
+void print_alphabet_x10(void)
 {
 	int i;
 	char j;

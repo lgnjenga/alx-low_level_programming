@@ -4,7 +4,7 @@
  *
  * @p: parameter of type int
  *
- * Return: Always q
+ * Return: q
  */
 int print_last_digit(int p)
 {
@@ -12,6 +12,7 @@ int print_last_digit(int p)
 
 	q = p % 10;
 	if (p < 0)
-		q = -p;
+		q = -q;
+	_putchar(q + '0');
 	return (q);
 }

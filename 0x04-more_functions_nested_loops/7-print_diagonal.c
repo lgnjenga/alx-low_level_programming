@@ -3,7 +3,7 @@
 /**
  * print_diagonal - print a diagonal line using \
  *
- * @n: parameter for number of times to print 
+ * @n: parameter for number of times to print
  *
  * Return: Always 0
  */

@@ -11,11 +11,19 @@
  */
 char *_strncpy(char *dest, char *src, int n)
 {
-	int r;
+	int a;
 
-	/* Loop through src n times to copy to dest */
-	for (r = 0; r < n; r++)
-		dest[r] = src[r];
+	a = 0;
+	while (a < n && src[a] != '\0')
+	{
+		dest[a] = src[a];
+		a++;
+	}
+	while (a < n)
+	{
+		dest[a] = '\0';
+		a++;
+	}
 
 	return (dest);
 }

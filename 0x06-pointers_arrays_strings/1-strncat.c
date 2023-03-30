@@ -24,7 +24,7 @@ char *_strncat(char *dest, char *src, int n)
 	for (s = 0; src[s] != '\0'; s++)
 		src_length++;
 	/* Loop through src to append to dest */
-	for (r = 0; r <= n; r++)
+	for (r = 0; r < n; r++)
 		dest[dest_length + r] = src[r];
 
 	return (dest);

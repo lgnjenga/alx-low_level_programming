@@ -23,7 +23,7 @@ char *_strncat(char *dest, char *src, int n)
 	/* Find length of src string array */
 	for (s = 0; src[s] != '\0'; s++)
 		src_length++;
-	/* Loop through src to append to dest */
+	/* Loop through src n times to append to dest */
 	for (r = 0; r < n; r++)
 		dest[dest_length + r] = src[r];
 

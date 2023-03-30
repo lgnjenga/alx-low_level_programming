@@ -1,31 +1,31 @@
 #include "main.h"
 
 /**
- * _strncat - returns a concatenated strings in one with limits
+ * _strncat - returns two concatenated strings
+ * using at most n bytes from src
  *
  * @dest: 1st string parameter to append to
  * @src: 2nd string parameter to append
  * @n: limit parameter
  *
- * Return: pointer to the resulting string
+ * Return: dest pointer to string result
  */
 char *_strncat(char *dest, char *src, int n)
 {
-	int dest_length = 0;
-	int src_length = 0;
-	int d;
-	int s;
-	int r;
+	int x;
+	int y;
 
-	/* Find length of dest string array */
-	for (d = 0; dest[d] != '\0'; d++)
-		dest_length++;
-	/* Find length of src string array */
-	for (s = 0; src[s] != '\0'; s++)
-		src_length++;
-	/* Loop through src n times to append to dest */
-	for (r = 0; r < n; r++)
-		dest[dest_length + r] = src[r];
+	int x = 0;
+	while (dest[x] != '\0')
+		x++;
 
+	j = 0;
+	while (j < n && src[y] != '\0')
+	{
+		dest[x] = src[y];
+		x++;
+		y++;
+	}
+	dest[x] = '\0';
 	return (dest);
 }

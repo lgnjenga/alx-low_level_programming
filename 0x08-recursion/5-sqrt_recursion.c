@@ -26,7 +26,7 @@ int sqrt_fn(int b, int e)
 
 	if (r > b)
 		return (-1);
-	if (r == n)
-		return (b);
+	if (r == b)
+		return (e);
 	return (sqrt_fn(b, e + 1));
 }

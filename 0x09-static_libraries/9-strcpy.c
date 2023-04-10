@@ -11,5 +11,8 @@
 char *_strcpy(char *dest, char *src)
 {
 	/* function code comment */
-	return (dest);
+	if (src)
+		return (dest);
+	else
+		return (NULL);
 }

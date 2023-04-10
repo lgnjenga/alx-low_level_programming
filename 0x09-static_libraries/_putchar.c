@@ -9,5 +9,8 @@
 int _putchar(char c)
 {
 	/* putchar function code */
-	return (1);
+	if (c)
+		return (1);
+	else
+		return (0);
 }

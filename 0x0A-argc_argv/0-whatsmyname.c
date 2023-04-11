@@ -18,7 +18,7 @@ int main(int argc __attribute__((unused)), char *argv[])
 	else
 		file_name += 1;
 
-	printf("%s", file_name);
+	printf("%s\n", file_name);
 
 	return (0);
 }

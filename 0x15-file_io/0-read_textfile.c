@@ -1,48 +1,73 @@
 #include "main.h"
-#include <stdlib.h>
 
 /**
- * print_textfile - Reads a text file and outputs its contents to STDOUT
+ * cleanup - frees allocated resources and closes the file
  *
- * @filename: Name of the text file to read
- * @letters: Number of characters to read from the file
- *
- * Return: written_count - actual number of bytes read and printed
- *		 0 if the function fails or the filename is NULL
+ * @buffer: pointer to the buffer
+ * @fd: file descriptor
  */
-ssize_t print_textfile(const char *filename, size_t letters)
+void cleanup(char *buffer, int fd)
 {
-	char single_char;
-	ssize_t file_desc;
-	ssize_t read_count;
-	ssize_t written_count = 0;
+	free(buffer);
+	close(fd);
+}
 
-	/* Check if filename is NULL */
+/**
+ * read_file - reads the file
+ *
+ * @fd: file descriptor
+ * @buffer: buffer to store the content
+ * @letters: number of letters to read
+ *
+ * Return: number of bytes read
+ */
+ssize_t read_file(int fd, char *buffer, size_t letters)
+{
+	return (read(fd, buffer, letters));
+}
+
+/**
+ * read_textfile - reads a text file and prints it to the POSIX standard output
+ *
+ * @filename: file to read and print
+ * @letters: number of letters to read and print
+ *
+ * Return: actual number of letters read and printed, or 0 on failure
+ */
+ssize_t read_textfile(const char *filename, size_t letters)
+{
+	int fd;
+	ssize_t bytesRead, bytesWritten;
+	char *buffer;
+
 	if (filename == NULL)
 		return (0);
 
-	/* Open the file */
-	file_desc = open(filename, O_RDONLY);
-	if (file_desc == -1)
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
 		return (0);
 
-	/* Read and print characters one by one */
-	for (read_count = 0; read_count < letters; ++read_count)
+	buffer = malloc(letters + 1);
+	if (buffer == NULL)
 	{
-		/* Read a single character from the file */
-		if (read(file_desc, &single_char, 1) != 1)
-			break;
-
-		/* Write the character to STDOUT */
-		if (write(STDOUT_FILENO, &single_char, 1) != 1)
-			return (0);
-
-		/* Increment the written_count */
-		++written_count;
+		close(fd);
+		return (0);
 	}
 
-	/* Close the file */
-	close(file_desc);
+	bytesRead = read_file(fd, buffer, letters);
+	if (bytesRead == -1)
+	{
+		cleanup(buffer, fd);
+		return (0);
+	}
 
-	return (written_count);
+	bytesWritten = write(STDOUT_FILENO, buffer, bytesRead);
+	if (bytesWritten != bytesRead)
+	{
+		cleanup(buffer, fd);
+		return (0);
+	}
+
+	cleanup(buffer, fd);
+	return (bytesRead);
 }

@@ -2,12 +2,10 @@
 
 /**
  * open_file - Open a file
- *
  * @filename: Name of the file to open
  * @flags: Flags to use when opening the file
  * @mode: Mode to use when opening the file
  * @exit_code: Exit code to use if file can't be opened
- *
  * Return: File descriptor of opened file
  */
 int open_file(char *filename, int flags, mode_t mode, int exit_code)
@@ -16,8 +14,14 @@ int open_file(char *filename, int flags, mode_t mode, int exit_code)
 
 	if (fd == -1)
 	{
-		dprintf(2, "Error: Can't %s %s\n",
-				(flags & O_RDONLY) ? "read from" : "write to", filename);
+		_putchar('Error: Can\'t ');
+		_putchar((flags & O_RDONLY) ? "read from" : "write to");
+		_putchar(' ');
+		while (*filename)
+		{
+			_putchar(*filename++);
+		}
+		_putchar('\n');
 		exit(exit_code);
 	}
 	return (fd);

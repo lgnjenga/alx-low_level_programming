@@ -2,10 +2,8 @@
 
 /**
  * main - Entry point
- *
  * @argc: Count of arguments
  * @argv: Array of arguments
- *
  * Return: Always 0
  */
 int main(int argc, char *argv[])
@@ -14,7 +12,7 @@ int main(int argc, char *argv[])
 
 	if (argc != 3)
 	{
-		dprintf(2, "Usage: cp file_from file_to\n");
+		_putchar("Usage: cp file_from file_to\n");
 		exit(97);
 	}
 

@@ -16,7 +16,9 @@ int create_file(const char *filename, char *text_content);
 int append_text_to_file(const char *filename, char *text_content);
 
 /* function prototypes for task 3 */
-void handle_files(int argc, char *argv[]);
-void read_and_write(int ff, int ft, char *ff_name, char *ft_name)
+void check_args(int argc);
+int open_file_read(char *file_name);
+int open_file_write(char *file_name);
+void handle_errors(int fd, char *file_name, int err_code);
 
 #endif

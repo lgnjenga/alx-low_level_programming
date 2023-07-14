@@ -1,92 +1,43 @@
 #include "main.h"
 
 /**
- * main - Entry point of program
- * @argc: Number of arguments
- * @argv: Array of arguments
+ * main - copies the content of a file to another file
+ * @argc: number of arguments passed to the program
+ * @argv: array of arguments passed to the program
  *
- * Return: 0 on success, or one of the exit codes on failure
+ * Return: 0 on success, or exit with error code on failure
  */
 int main(int argc, char *argv[])
 {
-	handle_files(argc, argv);
+	int file_from, file_to, read_bytes, write_bytes;
+	char buffer[BUFFER_SIZE];
+
+	/* Check number of arguments */
+	check_args(argc);
+
+	/* Open source file for reading */
+	file_from = open_file_read(argv[1]);
+
+	/* Open destination file for writing */
+	file_to = open_file_write(argv[2]);
+
+	/* Read from source file and write to destination file */
+	while ((read_bytes = read(file_from, buffer, BUFFER_SIZE)) > 0)
+	{
+		write_bytes = write(file_to, buffer, read_bytes);
+		if (write_bytes != read_bytes)
+			handle_errors(file_to, argv[2], 99);
+	}
+
+	/* Check if reading or writing failed */
+	if (read_bytes == -1)
+		handle_errors(file_from, argv[1], 98);
+
+	/* Close files and check for errors */
+	if (close(file_from) == -1)
+		handle_errors(file_from, argv[1], 100);
+	if (close(file_to) == -1)
+		handle_errors(file_to, argv[2], 100);
+
 	return (0);
-}
-
-/**
- * handle_files - Opens the source and destination files,
- * and handles the copying
- * @argc: Number of arguments
- * @argv: Array of arguments
- */
-void handle_files(int argc, char *argv[])
-{
-	int ff, ft;
-
-	if (argc != 3)
-	{
-		dprintf(STDERR_FILENO, "Usage: cp ff ft\n");
-		exit(97);
-	}
-
-	ff = open(argv[1], O_RDONLY);
-	if (ff < 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-		exit(98);
-	}
-
-	ft = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (ft < 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-		close(ff);
-		exit(99);
-	}
-
-	read_and_write(ff, ft, argv[1], argv[2]);
-
-	if (close(ff) < 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", ff);
-		exit(100);
-	}
-
-	if (close(ft) < 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", ft);
-		exit(100);
-	}
-}
-
-/**
- * read_and_write - Reads from source file and writes to destination file
- * @ff: File descriptor of the source file
- * @ft: File descriptor of the destination file
- * @ff_name: Name of the source file
- * @ft_name: Name of the destination file
- */
-void read_and_write(int ff, int ft, char *ff_name, char *ft_name)
-{
-	char buf[BUFSIZE];
-	ssize_t read_count, write_count;
-
-	while ((read_count = read(ff, buf, BUFSIZE)) > 0)
-	{
-		write_count = write(ft, buf, read_count);
-
-		if (write_count != read_count)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", ft_name);
-			close(ff);
-			close(ft);
-			exit(99);
-		}
-	}
-
-	if (read_count < 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", ff_name);
-		exit(98);
-	}
 }

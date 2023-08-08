@@ -14,10 +14,8 @@ int create_file(const char *filename, char *text_content);
 int append_text_to_file(const char *filename, char *text_content);
 
 /* Task 3 Functions */
-void check_argc(int argc);
-int open_file(const char *filename);
-int create_or_truncate_file(const char *filename);
-void write_to_file(int fd, char *buffer, ssize_t bytes, const char *filename);
-void close_files(int fd1, int fd2);
+void read_and_write(int s_fd, int d_fd, char *buffer, char *fn_f, char *fn_t);
+void close_fd(int file_descriptor);
+char *allocate_buffer(char *filename);
 
 #endif

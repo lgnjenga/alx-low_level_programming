@@ -18,4 +18,9 @@ void read_and_write(int s_fd, int d_fd, char *buffer, char *fn_f, char *fn_t);
 void close_fd(int file_descriptor);
 char *allocate_buffer(char *filename);
 
+/* Task 4 Function */
+void validate_elf(unsigned char *identifier);
+void show_magic(unsigned char *identifier);
+void close_file(int file_desc);
+
 #endif

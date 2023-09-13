@@ -1,27 +1,46 @@
 #include "hash_tables.h"
 
 /**
- * insert_node - Inserts a new node at the beginning of a linked list.
- * @head: A pointer to the current head of the linked list.
- * @key: The key to add.
- * @value: The value to add.
+ * hash_table_set - Add or update an element in a hash table.
+ * @ht: A pointer to the hash table.
+ * @key: The key to add - cannot be an empty string.
+ * @value: The value associated with key.
  *
- * Return: The new head of the linked list.
+ * Return: Upon failure - 0.
+ *		 Otherwise - 1.
  */
-static hash_node_t *insert_node(
-		hash_node_t *head, const char *key, const char *value)
+int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
-	hash_node_t *new_node;
+	if (ht == NULL || key == NULL || *key == '\0' || value == NULL)
+		return (0);
 
-	new_node = malloc(sizeof(hash_node_t));
+	unsigned long int index = key_index((const unsigned char *)key, ht->size);
+	hash_node_t *current = ht->array[index];
+	hash_node_t *prev = NULL;
+
+	while (current)
+	{
+		if (strcmp(current->key, key) == 0)
+		{
+			free(current->value);
+			current->value = strdup(value);
+			if (current->value == NULL)
+				return (0);
+			return (1);
+		}
+		prev = current;
+		current = current->next;
+	}
+
+	hash_node_t *new_node = malloc(sizeof(hash_node_t));
 	if (new_node == NULL)
-		return (NULL);
+		return (0);
 
 	new_node->key = strdup(key);
 	if (new_node->key == NULL)
 	{
 		free(new_node);
-		return (NULL);
+		return (0);
 	}
 
 	new_node->value = strdup(value);
@@ -29,53 +48,15 @@ static hash_node_t *insert_node(
 	{
 		free(new_node->key);
 		free(new_node);
-		return (NULL);
-	}
-
-	new_node->next = head;
-	return (new_node);
-}
-
-/**
- * hash_table_set - Adds an element to the hash table.
- * @ht: The hash table to add/update the key/value in.
- * @key: The key (string) to add or update.
- * @value: The value (string) associated with the key.
- *
- * Return: 1 if it succeeded, 0 otherwise.
- */
-int hash_table_set(hash_table_t *ht, const char *key, const char *value)
-{
-	unsigned long int index;
-	hash_node_t *current_node;
-
-	if (ht == NULL || key == NULL || strlen(key) == 0)
 		return (0);
-
-	/* Calculate the index */
-	index = key_index((unsigned char *)key, ht->size);
-
-	current_node = ht->array[index];
-
-	/* Check if the key already exists, update its value, and return */
-	while (current_node)
-	{
-		if (strcmp(current_node->key, key) == 0)
-		{
-			free(current_node->value);
-			current_node->value = strdup(value);
-			if (current_node->value == NULL)
-				return (0);
-			return (1);
-		}
-		current_node = current_node->next;
 	}
 
-	/**
-	 * Insert a new node
-	 * at the beginning of the linked list (collision handling)
-	 */
-	ht->array[index] = insert_node(ht->array[index], key, value);
+	new_node->next = NULL;
 
-	return (ht->array[index] ? 1 : 0);
+	if (prev == NULL)
+		ht->array[index] = new_node;
+	else
+		prev->next = new_node;
+
+	return (1);
 }

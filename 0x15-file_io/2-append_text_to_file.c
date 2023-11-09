@@ -1,44 +1,42 @@
 #include "main.h"
 
 /**
- * append_text_to_file - Function that appends text at the end of a file.
+ * append_text_to_file - Appends text at the end of a file.
  *
- * @filename: the name of the file
- * @text_content: a NULL terminated string to add at the end of the file
+ * @filename: Name of the file.
+ * @text_content: NULL terminated string to add at the end of the file.
  *
- * Return: 1 on success, -1 on failure
+ * Return: 1 on success, -1 on failure.
  */
 int append_text_to_file(const char *filename, char *text_content)
 {
-	int file_descriptor, write_res;
-	ssize_t text_len = 0;
+	int fd;
+	ssize_t write_res, len = 0;
 
-	/* If filename is NULL return -1 */
-	if (filename == NULL)
+	if (!filename)
 		return (-1);
 
-	/* Open the file in append mode, return -1 if it doesn't exist */
-	file_descriptor = open(filename, O_WRONLY | O_APPEND);
-	if (file_descriptor == -1)
+	fd = open(filename, O_WRONLY | O_APPEND);
+	if (fd == -1)
 		return (-1);
 
-	/* If text_content is NULL, do not add anything to the file */
-	if (text_content != NULL)
+	if (text_content)
 	{
-		while (text_content[text_len])
-			text_len++;
-
-		/* Write the text_content to the file */
-		write_res = write(file_descriptor, text_content, text_len);
-
-		/* If writing fails, return -1 */
+		while (text_content[len])
+			len++;
+		write_res = write(fd, text_content, len);
 		if (write_res == -1)
+		{
+			close(fd);
 			return (-1);
+		}
+	}
+	else
+	{
+		close(fd);
+		return (1);
 	}
 
-	/* Close the file */
-	close(file_descriptor);
-
-	/* Return 1 if everything is successful */
+	close(fd);
 	return (1);
 }

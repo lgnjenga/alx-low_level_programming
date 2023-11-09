@@ -3,25 +3,19 @@
 /**
  * flip_bits - Returns the number of bits to flip
  * to get from one number to another.
+ * @n: The first unsigned long integer.
+ * @m: The second unsigned long integer.
  *
- * @n: The first number.
- * @m: The second number.
- *
- * Return: The number of bits to flip.
+ * Return: The number of bits needed to flip.
  */
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
-	/* perform bitwise XOR to get the differing bits */
 	unsigned long int xor_result = n ^ m;
 	unsigned int count = 0;
 
-	while (xor_result != 0)
+	while (xor_result)
 	{
-		/* check if the righmost bit is 1 */
-		if ((xor_result & 1) == 1)
-			count++;
-
-		/* shift the result to the right by one bit */
+		count += xor_result & 1;
 		xor_result >>= 1;
 	}
 

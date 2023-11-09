@@ -2,13 +2,33 @@
 
 /**
  * print_binary - Prints the binary representation of a number.
- * @n: The number to be printed in binary.
+ * @n: The unsigned long int number to be printed in binary.
+ *
+ * Return: Nothing.
  */
 void print_binary(unsigned long int n)
 {
-	if (n > 1)
-		print_binary(n >> 1); /* Recursively shift the number to the right */
+	unsigned long int mask = 1UL << (sizeof(n) * 8 - 1);
 
-	_putchar((n & 1) + '0'); /* Print the rightmost bit by masking with 1 */
+	if (n == 0)
+	{
+		_putchar('0');
+		return;
+	}
 
+	/* Skip leading zeros */
+	while ((n & mask) == 0)
+	{
+		mask >>= 1;
+	}
+
+	/* Print binary representation */
+	while (mask)
+	{
+		if (n & mask)
+			_putchar('1');
+		else
+			_putchar('0');
+		mask >>= 1;
+	}
 }
